@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Каталог 18+</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    body { font-family: Arial; background:#111; color:#fff; padding:20px }
+    .product { border:1px solid #333; padding:10px; margin-bottom:10px }
+    button { padding:10px; background:#444; color:#fff; border:none }
+    #age { position:fixed; inset:0; background:#000; display:flex; flex-direction:column; justify-content:center; align-items:center }
+  </style>
+</head>
+<body>
+
+<div id="age">
+  <h2>Только для лиц 18+</h2>
+  <button onclick="accept()">Мне есть 18</button>
+  <button onclick="deny()">Мне нет 18</button>
+</div>
+
+<h1>Каталог</h1>
+
+<div class="product">
+  <h3>Marlboro Red</h3>
+  <p>Цена: 8€</p>
+  <button onclick="order('Marlboro Red')">Оставить заявку</button>
+</div>
+
+<div class="product">
+  <h3>Camel Blue</h3>
+  <p>Цена: 7.5€</p>
+  <button onclick="order('Camel Blue')">Оставить заявку</button>
+</div>
+
+<script>
+  const tg = window.Telegram.WebApp;
+  if (localStorage.getItem("age")) document.getElementById("age").remove();
+
+  function accept() {
+    localStorage.setItem("age", "yes");
+    document.getElementById("age").remove();
+  }
+
+  function deny() {
+    tg.close();
+  }
+
+  function order(product) {
+    tg.sendData(JSON.stringify({ product }));
+    alert("Заявка отправлена");
+  }
+</script>
+
+</body>
+</html>
